@@ -1,0 +1,16 @@
+.attributes {
+    float: right;
+}
+
+.sp {
+    margin-right: 10px;
+}
+
+.card {
+    border-bottom: 1px solid #252525;
+    
+}
+
+.matched {
+    color: lime;
+}
