@@ -1,4 +1,3 @@
-// CharCard.tsx
 import React from 'react';
 import style from './CharCard.module.css';
 import beli from '../public/Beli.webp';
@@ -18,8 +17,8 @@ function numberWithCommas(x: { toString: () => string }) {
 
 
 const imageStyle = {
-    webkitFilter: 'invert(100%)',
-    filter: 'invert(100%)',
+    webkitFilter: 'invert(69%) sepia(11%) saturate(299%) hue-rotate(178deg) brightness(98%) contrast(92%)',
+    filter: 'invert(69%) sepia(11%) saturate(299%) hue-rotate(178deg) brightness(98%) contrast(92%)',
   };
   
   interface CharCardProps extends Character {
@@ -63,10 +62,11 @@ const imageStyle = {
       };
     
   
+      
     return (
       <div className={style.card}>
         <div>
-          <h2 style={styles.name}>{name}</h2>
+          <h2 style={{...styles.name, color: randomCharacter && isMatchingProperty(name, randomCharacter.name) ? '#21c55d' : 'inherit'}}>{name}</h2>
           <span
             className={style.sp}
             style={{
@@ -132,4 +132,3 @@ const imageStyle = {
       </div>
     );
   }
-  

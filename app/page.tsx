@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import CharCard, { Character } from '@/components/CharCard';
 import styles from './page.module.css';
+import Link from 'next/link';
 
 
 
@@ -15,16 +16,16 @@ export default function Home() {
   const [guessCount, setGuessCount] = useState(0);
   const [isGuessedCorrectly, setIsGuessedCorrectly] = useState(false);
 
+  const isButtonDisabled = searchQuery === '';
+
   const getRandomCharacter = (characters: Character[]) => {
     const randomIndex = Math.floor(Math.random() * characters.length);
     return characters[randomIndex];
   };
 
-  const isButtonDisabled = searchQuery === '';
-
   const handleGuess = () => {
     if (guessCount === 7) {
-      alert("You have reached the maximum number of guesses! Please refresh the page to play again. The correct answer was " + randomCharacter?.name + ".");
+      alert("You have reached the maximum number of guesses!");
       return;
     }
     const foundCharacter = allCharacters.find(
@@ -32,7 +33,6 @@ export default function Home() {
         character.name.toLowerCase() === searchQuery.toLowerCase()
     );
     setMatchingCharacter(foundCharacter || null);
-    // Add the guessed character to the list of guessed characters
     if (foundCharacter) {
       setGuessedCharacters((prevGuessedCharacters) => [
         ...prevGuessedCharacters,
@@ -42,7 +42,7 @@ export default function Home() {
       setGuessCount((prevGuessCount) => prevGuessCount + 1);
 
       if (foundCharacter.name === randomCharacter?.name) {
-        alert(`Congratulations! You guessed correctly! You did it in ${guessCount + 1}/7 guesses! Please refresh the page to play again.`);
+        alert(`Congratulations! You guessed correctly! You did it in ${guessCount + 1}/7 guesses!`);
         setIsGuessedCorrectly(true);
       }
     }
@@ -60,7 +60,6 @@ export default function Home() {
         const characters = await response.json();
         setAllCharacters(characters);
 
-        // Select a random character and set it as the randomCharacter
         const randomCharacter = getRandomCharacter(characters);
         setRandomCharacter(randomCharacter);
       } catch (error) {
@@ -78,14 +77,15 @@ export default function Home() {
 
 
   return (
+    <div className={styles.container}>
     <main className={styles.all}>
 
       <div>
-        <h1>One Piece Guess</h1>
+        <h1 className={styles.h1}>PiecePedia</h1>
       </div>
       <div>
-        <p>Guess your favorite One Piece characters!</p>
-        <p>Data updated as of Egghead Arc</p>
+        <p className={styles.p}>Guess that One Piece icon!</p>
+        <p className={styles.p}>Guesses: {guessCount}/7</p>
         <select value={searchQuery} onChange={handleDropdownChange}>
           <option value="">Select a character</option>
           {sortedCharacters.map((character) => (
@@ -97,7 +97,7 @@ export default function Home() {
         <button type="button" onClick={handleGuess} disabled={isGuessedCorrectly || isButtonDisabled}>
         Guess
       </button>
-        <span>Guesses: {guessCount}/7</span>
+      
       </div>
       {matchingCharacter && (
         <div>
@@ -129,9 +129,10 @@ export default function Home() {
           ))}
         </div>
       )}
+      </main>
       <footer className={styles.foot}>
-        <p>Created by Jimmy Kolev</p>
+        <p>Created by <Link href="https://www.kolev.co.uk" target="_blank" className={styles.link}>Jimmy Kolev</Link></p>
       </footer>
-    </main>
+    </div>
   );
 }

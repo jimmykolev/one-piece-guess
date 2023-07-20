@@ -140,6 +140,69 @@ const characters = [
         "origin": "West Blue",
         "bounty": 350000000,
         "height": 216
+    },
+    {
+        "name": "Scratchmen Apoo",
+        "age": 28,
+        "origin": "Grand Line",
+        "bounty": 350000000,
+        "height": 198
+    },
+    {
+        "name": "Basil Hawkins",
+        "age": 31,
+        "origin": "North Blue",
+        "bounty": 320000000,
+        "height": 210
+    },
+    {
+        "name": "X Drake",
+        "age": 33,
+        "origin": "North Blue",
+        "bounty": 222000000,
+        "height": 233
+    },
+    {
+        "name": "Urouge",
+        "age": 47,
+        "origin": "Sky Island",
+        "bounty": 108000000,
+        "height": 388
+    },
+    {
+        "name": "Jewelry Bonney",
+        "age": 24,
+        "origin": "South Blue",
+        "bounty": 320000000,
+        "height": 174
+    },
+    {
+        "name": "Killer",
+        "age": 27,
+        "origin": "South Blue",
+        "bounty": 200000000,
+        "height": 195
+    },
+    {
+        "name": "Marshall D. Teach",
+        "age": 40,
+        "origin": "Grand Line",
+        "bounty": 3996000000,
+        "height": 344
+    },
+    {
+        "name": "King",
+        "age": 47,
+        "origin": "Grand Line",
+        "bounty": 1390000000,
+        "height": 613
+    },
+    {
+        "name": "Queen",
+        "age": 56,
+        "origin": "Grand Line",
+        "bounty": 1320000000,
+        "height": 612
     }
   ];
 
