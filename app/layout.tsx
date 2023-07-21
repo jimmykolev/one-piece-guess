@@ -1,5 +1,7 @@
+import { Auth } from 'googleapis'
 import './globals.css'
 import type { Metadata } from 'next'
+import AuthProvider from './AuthProvider'
 
 
 
@@ -14,8 +16,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <AuthProvider>
+<html lang="en">
       <body>{children}</body>
     </html>
+    </AuthProvider>
+    
   )
 }
