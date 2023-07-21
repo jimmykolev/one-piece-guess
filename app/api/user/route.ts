@@ -18,11 +18,7 @@ export async function GET(request: Request) {
         level: "desc",
       },
     });
-
-    const headers = {
-      "cache-control": "max-age=600",
-    };
   
-    return NextResponse.json(users, { headers });
+    return NextResponse.json(users);
   }
 
