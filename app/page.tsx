@@ -66,23 +66,23 @@ export default function Home() {
   
 
   useEffect(() => {
-    if (session) {
-      const fetchUserData = async () => {
-        try {
+    const fetchUserData = async () => {
+      try {
+        if (session && status === 'authenticated') {
           const email = session.user?.email ?? '';
           const userData = await fetchUser(email);
           if (userData) {
             setUserXP(userData.xp);
             setUserLevel(userData.level);
           }
-        } catch (error) {
-          console.error('Error fetching user data:', error);
         }
-      };
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
 
-      fetchUserData();
-    }
-  }, [session]);
+    fetchUserData();
+  }, [session, status]);
 
   const isButtonDisabled = searchQuery === '';
 
@@ -169,6 +169,7 @@ export default function Home() {
         <p className={styles.p}>Guess that One Piece icon!</p>
         <SignInButton />
         <p className={styles.p}>Guesses: {guessCount}/7</p>
+
 
         <select value={searchQuery} onChange={handleDropdownChange}>
           <option value="">Select a character</option>
