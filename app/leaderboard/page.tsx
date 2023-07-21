@@ -17,6 +17,10 @@ const LeaderboardPage = () => {
     fetchLeaderboard().then((data) => setLeaderboardData(data));
   }, []);
 
+  
+  // split to get first name
+  const firstName = leaderboardData[0]?.name.split(" ")[0];
+
   return (
     <div>
       <Header/>  
@@ -33,7 +37,7 @@ const LeaderboardPage = () => {
           {leaderboardData.map((user, index) => (
             <tr key={user.id}>
               <td>{index + 1}</td>
-              <td>{user.name}</td>
+              <td>{firstName}</td>
               <td>{user.level}</td>
             </tr>
           ))}
