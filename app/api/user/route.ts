@@ -28,7 +28,11 @@ export async function GET(req: Request) {
   
       // return the user if found
       if (user) {
-          return NextResponse.json(user);
+          const headers = {
+    "cache-control": "max-age=60",
+  };
+
+  return NextResponse.json(users, { headers });
       } else {
           return NextResponse.json({ status: 404 });
       }
