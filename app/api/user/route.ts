@@ -1,3 +1,4 @@
+// pages/api/leaderboard.ts
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
@@ -18,9 +19,10 @@ export async function GET(request: Request) {
       },
     });
 
-    return NextResponse.json(users, {
-      headers: {
-        "Cache-Control": "max-age=0, s-maxage=60, stale-while-revalidate",
-      },
-    });
+    const headers = {
+      "cache-control": "max-age=600",
+    };
+  
+    return NextResponse.json(users, { headers });
   }
+
