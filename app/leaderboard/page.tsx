@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import Header from "@/components/header";
@@ -17,13 +15,14 @@ const LeaderboardPage = () => {
     fetchLeaderboard().then((data) => setLeaderboardData(data));
   }, []);
 
-  
-  // split to get first name
-  const firstName = leaderboardData[0]?.name.split(" ")[0];
+  // Extract the first name from the full name
+  function getFirstName(fullName: string): string {
+    return fullName.split(" ")[0];
+  }
 
   return (
     <div>
-      <Header/>  
+      <Header />
       <h1>Leaderboard</h1>
       <table className={styles.table}>
         <thead>
@@ -37,7 +36,7 @@ const LeaderboardPage = () => {
           {leaderboardData.map((user, index) => (
             <tr key={user.id}>
               <td>{index + 1}</td>
-              <td>{firstName}</td>
+              <td>{getFirstName(user.name)}</td>
               <td>{user.level}</td>
             </tr>
           ))}
