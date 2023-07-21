@@ -19,6 +19,10 @@ export async function GET(request: Request) {
       },
     });
   
-    return NextResponse.json(users);
+    return NextResponse.json(users, {
+    headers: {
+      "Cache-Control": "max-age=0, s-maxage=60, stale-while-revalidate",
+    },
+  });
   }
 
