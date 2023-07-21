@@ -64,6 +64,7 @@ export function SignInButton() {
             )}
           </>
         )}
+        <br />
         <SignOutButton />
       </>
     );
