@@ -1,35 +1,28 @@
-import { NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { prisma } from '@/lib/prisma';
-import { authOptions } from "../auth/[...nextauth]/route"
+import { prisma } from "@/lib/prisma";
+import { NextResponse } from "next/server";
 
-export async function GET(req: Request) {
-  const session = await getServerSession(authOptions);
-  const email = session?.user?.email!;
+export async function GET(request: Request) {
 
+    // Find users and order them by level in descending order
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        image: true,
+        xp: true,
+        level: true,
+      },
+      orderBy: {
+        level: "desc",
+      },
+    });
 
-  
-      // find the user by email
-      const user = await prisma.user.findUnique({
-          where: {
-              email: email,
-          },
-          select: {
-              id: true,
-              name: true,
-              email: true,
-              image: true,
-              xp: true,
-              level: true,
-              coins: true,
-              admin: true,
-          }
-      });
-  
-      // return the user if found
-      if (user) {
-          return NextResponse.json(user);
-      } else {
-          return NextResponse.json({ status: 404 });
-      }
+    return NextResponse.json(users, {
+      headers: {
+        "Cache-Control": "max-age=0, s-maxage=60, stale-while-revalidate",
+      },
+    });
   }
+
+  export default { GET };
