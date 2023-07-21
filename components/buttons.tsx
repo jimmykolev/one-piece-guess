@@ -23,35 +23,47 @@ async function fetchUser(email: string) {
 export function SignInButton() {
   const { data: session, status } = useSession();
   const [user, setUser] = useState<User | null>(null);
-  const [isGuessedCorrectly, setIsGuessedCorrectly] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (status === 'authenticated') {
-      const email = session.user?.email ?? '';
-      fetchUser(email).then((user) => setUser(user));
+    if (status === 'authenticated' && session?.user?.email) {
+      setIsLoading(true);
+      fetchUser(session.user.email)
+        .then((userData) => {
+          setIsLoading(false);
+          setUser(userData);
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          console.error('Error fetching user data:', error);
+        });
     }
-  }, [session, status, user]);
+  }, [session, status]);
 
   if (status === 'loading') {
     return <>...</>;
   }
 
   if (status === 'authenticated') {
-    const name = session.user?.name ?? '';
+    const name = session?.user?.name ?? '';
     return (
       <>
         <p>Logged in as <b>{name}</b></p>
-        {user ? (
-          <>
-            <span className={styles.sp}>Level: <b>{user.level}</b></span>
-            <span className={styles.sp}>XP: <b>{user.xp}</b></span>
-            <span className={styles.sp}>Coins: <b>{user.coins}</b></span>
-          </>
-        ) : (
+        {isLoading ? (
           <p>Loading user data...</p>
+        ) : (
+          <>
+            {user ? (
+              <>
+                <span className={styles.sp}>Level: <b>{user.level}</b></span>
+                <span className={styles.sp}>XP: <b>{user.xp}</b></span>
+                <span className={styles.sp}>Coins: <b>{user.coins}</b></span>
+              </>
+            ) : (
+              <p>No user data found.</p>
+            )}
+          </>
         )}
-        <br />
-        {isGuessedCorrectly && session?.user?.email}
         <SignOutButton />
       </>
     );
