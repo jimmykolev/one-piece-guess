@@ -6,6 +6,7 @@ export default function Header() {
         <div className={styles.social}>
                 <Link href="/" className={styles.socialm}>Home</Link>
                 <Link href="/leaderboard" className={styles.socialm}>Leaderboard</Link>
+                <Link href="/help" className={styles.socialm}>Help</Link>
         </div>
     );
 }
