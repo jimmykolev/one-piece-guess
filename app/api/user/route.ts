@@ -32,7 +32,7 @@ export async function GET(req: Request) {
     "cache-control": "max-age=60",
   };
 
-  return NextResponse.json(users, { headers });
+  return NextResponse.json(user, { headers });
       } else {
           return NextResponse.json({ status: 404 });
       }
