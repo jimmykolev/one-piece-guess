@@ -66,23 +66,23 @@ export default function Home() {
   
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        if (session && status === 'authenticated') {
+    if (session) {
+      const fetchUserData = async () => {
+        try {
           const email = session.user?.email ?? '';
           const userData = await fetchUser(email);
           if (userData) {
             setUserXP(userData.xp);
             setUserLevel(userData.level);
           }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
         }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
+      };
 
-    fetchUserData();
-  }, [session, status]);
+      fetchUserData();
+    }
+  }, [session]);
 
   const isButtonDisabled = searchQuery === '';
 
