@@ -169,7 +169,6 @@ export default function Home() {
         <p className={styles.p}>Guess that One Piece icon!</p>
         <SignInButton />
         <p className={styles.p}>Guesses: {guessCount}/7</p>
-        <p>{randomCharacter?.name}</p>
 
         <select value={searchQuery} onChange={handleDropdownChange}>
           <option value="">Select a character</option>

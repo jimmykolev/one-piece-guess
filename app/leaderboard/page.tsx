@@ -4,18 +4,14 @@ import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import Header from "@/components/header";
 
-async function fetchLeaderboard() {
-  try {
-    const response = await fetch("/api/users");
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching leaderboard:", error);
-    return [];
-  }
+interface User {
+  id: string | null | undefined;
+  name: string;
+  level: number;
 }
 
 const LeaderboardPage = () => {
-  const [leaderboardData, setLeaderboardData] = useState([]);
+  const [leaderboardData, setLeaderboardData] = useState<Array<User>>([]);
 
   useEffect(() => {
     fetchLeaderboard().then((data) => setLeaderboardData(data));
@@ -48,3 +44,14 @@ const LeaderboardPage = () => {
 };
 
 export default LeaderboardPage;
+
+async function fetchLeaderboard() {
+  try {
+    const response = await fetch("/api/users");
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching leaderboard:", error);
+    return [];
+  }
+}

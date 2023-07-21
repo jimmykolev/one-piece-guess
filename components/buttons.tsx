@@ -2,10 +2,18 @@ import { useSession, signIn, signOut } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import styles from './buttons.module.css';
 
+interface User {
+  name: string;
+  level: number;
+  xp: number;
+  coins: number;
+}
+
 async function fetchUser(email: string) {
   try {
     const response = await fetch(`/api/user?email=${email}`);
-    return await response.json();
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.error('Error fetching user:', error);
     return null;
@@ -14,7 +22,7 @@ async function fetchUser(email: string) {
 
 export function SignInButton() {
   const { data: session, status } = useSession();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const [isGuessedCorrectly, setIsGuessedCorrectly] = useState(false);
 
   useEffect(() => {
@@ -49,9 +57,20 @@ export function SignInButton() {
     );
   }
 
-  return <button onClick={() => signIn()}>Sign in</button>;
+  return (
+    <button onClick={() => signIn()}>
+      Sign in
+    </button>
+  );
 }
 
 export function SignOutButton() {
-  return <button onClick={() => signOut()}>Sign out</button>;
+  return (
+    <button onClick={() => {
+      signOut();
+    }}
+    >
+      Sign out
+    </button>
+  );
 }
